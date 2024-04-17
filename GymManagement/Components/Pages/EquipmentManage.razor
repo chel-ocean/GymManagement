@@ -1,0 +1,42 @@
+﻿@page "/equipment"
+@using GymManagement.Components.Classes;
+@using System;
+@using System.Collections;
+@using System.Collections.Generic;
+@using System.IO;
+@using MySqlConnector;
+<h3>Equipment</h3>
+
+<table style="width:100%">
+	<tr>
+		<th>Equipment ID</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Checked Out?</th>
+	</tr>
+	@foreach (Equipment equipment in equipmentList)
+	{
+		<tr>
+			<th>@equipment.ID</th>
+			<th>@equipment.Name	</th>
+			<th>@equipment.Type</th>
+			
+			<th><input type="checkbox" checked = "@equipment.IsCheckedOut"></th>
+		</tr>
+	}
+</table>
+<br />
+
+@code {
+	List<Equipment> equipmentList = new List<Equipment>();
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		EquipmentManagerUI equipmentManagerUI = new EquipmentManagerUI();
+		equipmentManagerUI.CreateEquipmentList();
+		equipmentList = equipmentManagerUI.ReadEquipment();
+	}
+
+	
+	
+}
