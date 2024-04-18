@@ -24,34 +24,41 @@ namespace GymManagement.Components.Classes
 			MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
 			connection.Open();
 
-			string drop = "drop table Equipment";
+			// Create new table Equipment
 			string create = "create table if not exists Equipment(ID int, Name varchar(20) not null, Type varchar(20) not null, CheckedOut bool not null)";
-
-			string insert1 = "insert into Equipment values(1001, 'Chrome Dumbbell', 'Weights', 0)";
-			string insert2 = "insert into Equipment values(1005, 'Vinyl Dumbbell', 'Weights', 0)";
-			string insert3 = "insert into Equipment values(2007, 'Rowing Machine', 'Cardio', 0)";
-			string insert4 = "insert into Equipment values(2009, 'Treadmill', 'Cardio', 0)";
-			string insert5 = "insert into Equipment values(3003, 'Lat Pulldown', 'Machine', 0)";
-			string insert6 = "insert into Equipment values(3005, 'Leg Press', 'Machine', 0)";
-
-			MySqlCommand dropCmd = new MySqlCommand(drop, connection);
 			MySqlCommand createCmd = new MySqlCommand(create, connection);
-			MySqlCommand insert1Cmd = new MySqlCommand(insert1, connection);
-			MySqlCommand insert2Cmd = new MySqlCommand(insert2, connection);
-			MySqlCommand insert3Cmd = new MySqlCommand(insert3, connection);
-			MySqlCommand insert4Cmd = new MySqlCommand(insert4, connection);
-			MySqlCommand insert5Cmd = new MySqlCommand(insert5, connection);
-			MySqlCommand insert6Cmd = new MySqlCommand(insert6, connection);
-
-			dropCmd.ExecuteNonQuery();
 			createCmd.ExecuteNonQuery();
-			insert1Cmd.ExecuteNonQuery();
-			insert2Cmd.ExecuteNonQuery();
-			insert3Cmd.ExecuteNonQuery();
-			insert4Cmd.ExecuteNonQuery();
-			insert5Cmd.ExecuteNonQuery();
-			insert6Cmd.ExecuteNonQuery();
 
+			// Counts number of rows in Equipment table, to check if it is empty
+			string count = "select count(*) from Equipment";
+			MySqlCommand countCmd = new MySqlCommand(count, connection);
+			countCmd.ExecuteScalar();
+			int result = int.Parse(countCmd.ExecuteScalar().ToString());
+
+			// If the table is empty, fill it with the following information
+			if (result == 0) {
+				string insert1 = "insert into Equipment values(1001, 'Chrome Dumbbell', 'Weights', 0)";
+				string insert2 = "insert into Equipment values(1005, 'Vinyl Dumbbell', 'Weights', 0)";
+				string insert3 = "insert into Equipment values(2007, 'Rowing Machine', 'Cardio', 0)";
+				string insert4 = "insert into Equipment values(2009, 'Treadmill', 'Cardio', 0)";
+				string insert5 = "insert into Equipment values(3003, 'Lat Pulldown', 'Machine', 0)";
+				string insert6 = "insert into Equipment values(3005, 'Leg Press', 'Machine', 0)";
+
+				MySqlCommand insert1Cmd = new MySqlCommand(insert1, connection);
+				MySqlCommand insert2Cmd = new MySqlCommand(insert2, connection);
+				MySqlCommand insert3Cmd = new MySqlCommand(insert3, connection);
+				MySqlCommand insert4Cmd = new MySqlCommand(insert4, connection);
+				MySqlCommand insert5Cmd = new MySqlCommand(insert5, connection);
+				MySqlCommand insert6Cmd = new MySqlCommand(insert6, connection);
+
+				insert1Cmd.ExecuteNonQuery();
+				insert2Cmd.ExecuteNonQuery();
+				insert3Cmd.ExecuteNonQuery();
+				insert4Cmd.ExecuteNonQuery();
+				insert5Cmd.ExecuteNonQuery();
+				insert6Cmd.ExecuteNonQuery();
+			}
+			
 			connection.Close();
 		}
 

@@ -30,5 +30,6 @@ namespace GymManagement.Components.Classes
 			this.Type = Type;
 		}
 
+		public Equipment() { }
 	}
 }

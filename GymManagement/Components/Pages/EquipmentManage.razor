@@ -5,38 +5,160 @@
 @using System.Collections.Generic;
 @using System.IO;
 @using MySqlConnector;
-<h3>Equipment</h3>
+<h3>Equipment Management</h3>
 
-<table style="width:100%">
-	<tr>
-		<th>Equipment ID</th>
-		<th>Name</th>
-		<th>Type</th>
-		<th>Checked Out?</th>
-	</tr>
-	@foreach (Equipment equipment in equipmentList)
-	{
+<h4>Equipment List</h4>
+<div style="height:12.8rem;overflow:auto;">
+	<table style="width:100%">
 		<tr>
-			<th>@equipment.ID</th>
-			<th>@equipment.Name	</th>
-			<th>@equipment.Type</th>
-			
-			<th><input type="checkbox" checked = "@equipment.IsCheckedOut"></th>
+			<th>Equipment ID</th>
+			<th>Name</th>
+			<th>Type</th>
+			<th style="text-align:center;">Checked Out</th>
 		</tr>
-	}
-</table>
+		@foreach (Equipment equipment in equipmentList)
+		{
+			<tr>
+				<th>@equipment.ID</th>
+				<th>@equipment.Name	</th>
+				<th>@equipment.Type</th>
+				<th style="text-align:center;"><input type="checkbox" checked="@equipment.IsCheckedOut" style="pointer-events: none;"></th>
+
+			</tr>
+		}
+	</table>
+</div>
 <br />
+<br />
+
+<h4>Check In/Out Equipment</h4>
+<form>
+	<label>Enter Equipment ID: </label>
+	<input type="text" placeholder="Equipment ID" @bind="checkOutEquipmentId"/>
+	<button @onclick="CheckInOutEquipment">Check In/Out</button>
+</form>
+<br />
+<br />
+
+<h4>Add New Equipment</h4>
+<form>
+	<label>Enter Equipment ID: </label>
+	<input type="number" placeholder="Equipment ID" @bind="newEquipmentId"/>
+	<input type="text" placeholder="Equipment Name" @bind="newEquipmentName"/>
+	<label>Select Equipment Type: </label>
+	<select @bind="newEquipmentType">
+		<option value="">Choose Equipment Type</option>
+		<option value="Weights">Weights</option>
+		<option value="Cardio">Cardio</option>
+		<option value="Machine">Machine</option>
+	</select>
+	<button @onclick="CreateNewEquipment">Add Equipment</button>
+</form>
+<br />
+<br />
+
+<h4>Delete Equipment</h4>
+<form>
+	<label>Enter Equipment ID: </label>
+	<input type="text" placeholder="Equipment ID" @bind="deleteEquipmentId" />
+	<button @onclick="DeleteEquipment">Delete</button>
+</form>
 
 @code {
 	List<Equipment> equipmentList = new List<Equipment>();
+	EquipmentManagerUI equipmentManagerUI = new EquipmentManagerUI();
+	int checkOutEquipmentId;
+	int newEquipmentId;
+	string newEquipmentName;
+	string newEquipmentType;
+	int deleteEquipmentId;
+
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();
-		EquipmentManagerUI equipmentManagerUI = new EquipmentManagerUI();
 		equipmentManagerUI.CreateEquipmentList();
 		equipmentList = equipmentManagerUI.ReadEquipment();
 	}
 
-	
-	
+	public void CheckInOutEquipment()
+	{
+		MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
+			{
+				Server = "localhost",
+				UserID = "root",
+				Password = "password",
+				Database = "demo211",
+			};
+		MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
+		connection.Open();
+		string update;
+		foreach (Equipment equipment in equipmentList)
+		{
+			if (checkOutEquipmentId == equipment.ID)
+			{
+				if (equipment.IsCheckedOut == false) 
+				{
+					update = $"update Equipment set CheckedOut = 1 where ID={checkOutEquipmentId}";
+					MySqlCommand updateCmd = new MySqlCommand(update, connection);
+					updateCmd.ExecuteNonQuery();
+				}
+				else 
+				{
+					update = $"update Equipment set CheckedOut = 0 where ID={checkOutEquipmentId}";
+					MySqlCommand updateCmd = new MySqlCommand(update, connection);
+					updateCmd.ExecuteNonQuery();
+				}
+			}
+		}
+		connection.Close();
+	}
+
+	public void CreateNewEquipment()
+	{
+		Equipment newEquipment = new Equipment(newEquipmentId, newEquipmentName, newEquipmentType);
+		equipmentList.Add(newEquipment);
+		MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
+			{
+				Server = "localhost",
+				UserID = "root",
+				Password = "password",
+				Database = "demo211",
+			};
+		MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
+		connection.Open();
+
+		string insertNewEquipment = $"insert into Equipment values({newEquipmentId}, '{newEquipmentName}', '{newEquipmentType}','0')";
+		MySqlCommand insertNewEquipmentCmd = new MySqlCommand(insertNewEquipment, connection);
+		insertNewEquipmentCmd.ExecuteNonQuery();
+		connection.Close(); 
+	}
+
+	public void DeleteEquipment()
+	{
+		Equipment deleteEquipment = new Equipment();
+		foreach (Equipment equipment in equipmentList) {
+			if (equipment.ID == deleteEquipmentId) {
+				deleteEquipment.ID = equipment.ID;
+				deleteEquipment.Name = equipment.Name;
+				deleteEquipment.Type = equipment.Type;
+				deleteEquipment.IsCheckedOut = equipment.IsCheckedOut;
+			}
+		}
+
+		equipmentList.Remove(deleteEquipment);
+
+		MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
+			{
+				Server = "localhost",
+				UserID = "root",
+				Password = "password",
+				Database = "demo211",
+			};
+		MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
+		connection.Open();
+		string delete = $"delete from Equipment where ID = {deleteEquipmentId}";
+		MySqlCommand deleteCmd = new MySqlCommand(delete, connection);
+		deleteCmd.ExecuteNonQuery();
+		connection.Close();
+	}
 }
