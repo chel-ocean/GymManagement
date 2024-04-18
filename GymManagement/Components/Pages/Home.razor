@@ -1,5 +1,36 @@
 ﻿@page "/"
 
-<h1>Bob’s GYM </h1>
+<h1 class="text-center">Bob’s GYM </h1>
 
-Welcome to your new app.
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Email</th>
+            <th scope="col">Type</th>
+            <th scope="col"> Checked In</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>f</td>
+        </tr>
+        
+        @foreach (var cusotmer in basicList )
+        {
+            <tr>
+               
+                <td>@cusotmer.customerFName</td>
+                <td>@cusotmer.customerLName</td>
+                <td>@cusotmer.email</td>
+                <td>@cusotmer.CustomerType</td>
+               
+            </tr>
+        }
+
+    </tbody>
+</table>
