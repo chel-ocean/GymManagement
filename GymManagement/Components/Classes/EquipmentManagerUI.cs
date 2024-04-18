@@ -58,7 +58,6 @@ namespace GymManagement.Components.Classes
 				insert5Cmd.ExecuteNonQuery();
 				insert6Cmd.ExecuteNonQuery();
 			}
-			
 			connection.Close();
 		}
 
