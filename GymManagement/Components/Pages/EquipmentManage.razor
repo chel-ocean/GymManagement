@@ -23,7 +23,6 @@
 				<th>@equipment.Name	</th>
 				<th>@equipment.Type</th>
 				<th style="text-align:center;"><input type="checkbox" checked="@equipment.IsCheckedOut" style="pointer-events: none;"></th>
-
 			</tr>
 		}
 	</table>
@@ -80,8 +79,16 @@
 		equipmentList = equipmentManagerUI.ReadEquipment();
 	}
 
-	public void CheckInOutEquipment()
+	public async void CheckInOutEquipment()
 	{
+		List<int> equipmentIDs = new List<int>();
+		foreach (Equipment equipment in equipmentList) equipmentIDs.Add(equipment.ID);
+
+		if (!(equipmentIDs.Contains(checkOutEquipmentId)))
+		{
+			await Application.Current.MainPage.DisplayAlert("Equipment does not exist.", $"An equipment with ID: {checkOutEquipmentId} does not exist. Please enter a valid ID.", "OK");
+			return;
+		}
 		MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
 			{
 				Server = "localhost",
@@ -111,10 +118,32 @@
 			}
 		}
 		connection.Close();
+
 	}
 
-	public void CreateNewEquipment()
+	public async void CreateNewEquipment()
 	{
+		List<int> equipmentIDs = new List<int>();
+		foreach (Equipment equipment in equipmentList) equipmentIDs.Add(equipment.ID);
+			
+		if (equipmentIDs.Contains(newEquipmentId))
+		{
+			await Application.Current.MainPage.DisplayAlert("Equipment already exists.", $"An equipment with ID: {newEquipmentId} already exists. Please enter a unique ID.", "OK");
+			return;
+		}
+
+		if (newEquipmentName == null)
+		{
+			await Application.Current.MainPage.DisplayAlert("Equipment name missing", "Please enter the equipment name.", "OK");
+			return;
+		}
+
+		if (newEquipmentType == null)
+		{
+			await Application.Current.MainPage.DisplayAlert("Equipment type missing", "Please choose the equipment type.", "OK");
+			return;
+		}
+
 		Equipment newEquipment = new Equipment(newEquipmentId, newEquipmentName, newEquipmentType);
 		equipmentList.Add(newEquipment);
 		MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
@@ -130,11 +159,19 @@
 		string insertNewEquipment = $"insert into Equipment values({newEquipmentId}, '{newEquipmentName}', '{newEquipmentType}','0')";
 		MySqlCommand insertNewEquipmentCmd = new MySqlCommand(insertNewEquipment, connection);
 		insertNewEquipmentCmd.ExecuteNonQuery();
-		connection.Close(); 
+		connection.Close();
 	}
 
-	public void DeleteEquipment()
+	public async void DeleteEquipment()
 	{
+		List<int> equipmentIDs = new List<int>();
+		foreach (Equipment equipment in equipmentList) equipmentIDs.Add(equipment.ID);
+
+		if (!(equipmentIDs.Contains(deleteEquipmentId)))
+		{
+			await Application.Current.MainPage.DisplayAlert("Equipment does not exist.", $"An equipment with ID: {deleteEquipmentId} does not exist. Please enter a valid ID.", "OK");
+			return;
+		}
 		Equipment deleteEquipment = new Equipment();
 		foreach (Equipment equipment in equipmentList) {
 			if (equipment.ID == deleteEquipmentId) {
@@ -161,4 +198,7 @@
 		deleteCmd.ExecuteNonQuery();
 		connection.Close();
 	}
+
+
+
 }
