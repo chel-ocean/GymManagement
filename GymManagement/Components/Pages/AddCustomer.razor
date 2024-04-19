@@ -1,0 +1,59 @@
+﻿@page "/AddCustomer"
+
+<h1 class="text-center">Add Customer</h1>
+
+
+<div class="flights container">
+    <div class="row">
+        <div class="col">
+            From:
+            <input type="text" @bind="Id" placeholder="Any" />
+
+
+        </div>
+        <div class="col ">
+            To:
+            <input type="text" @bind="arivalName" placeholder="Any" />
+        </div>
+        <div class="col ">
+            Day:
+            <input type="text" @bind="day" placeholder="Any" />
+        </div>
+
+        <div class="col ">
+            <button type="submit" class="btn btn-primary btn-sm btn-block m-0" onclick="@(() => searchFLights(deptName,arivalName,day))">Find flight</button>
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Calories</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row"> <input type="text" /></th>
+            <td> <input type="text" /></td>
+            <td> <input type="text" /></td>
+            <td> <input type="text" /></td>
+        </tr>
+        
+    </tbody>
+</table>
+
+@code {
+
+}

@@ -11,6 +11,7 @@ namespace GymManagement.Components.Classes
         public int workDuration { get; set; }
         public int maxBench { get; set; }
         public int maxDeadlift { get; set; }
+        public string CustomerType = "friend";
 
         public FriendCustomer(string ID, string firstName, string lastName, string phone, string Email, int Calories, int duration, int bench, int deadlift) : base(ID, firstName, lastName, phone, Email, Calories)
         {

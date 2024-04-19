@@ -68,26 +68,31 @@ namespace GymManagement.Services
                 LastName VARCHAR(255) NOT NULL,
                 phone VARCHAR(255),
                 email TEXT,
-                
+                Calories int,
                 duration int,
                 bench int,
                 deadlift int
                 
             )";
             
-            //var populatebasic = "Insert into BasicCustomer values('1234','bob','dame','403-343-2332','23@mad',234),('1235','fob','lame','423-323-1952','dfsd@mad',2334) ";
-           // var popuateCom = new MySqlCommand(populatebasic,connection);
+          
             var command = new MySqlCommand(basicSql, connection);
             var command2 = new MySqlCommand(epicSql, connection);
             var command3 = new MySqlCommand(friendSql, connection);
-            //command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
             
             command.ExecuteNonQuery();
             command2.ExecuteNonQuery();
             
             command3.ExecuteNonQuery();
-            //popuateCom.ExecuteNonQuery();
-            
+
+
+            var checkbasic = "select * form BasicCustomer;";
+            var commandtestBasic = new MySqlCommand(checkbasic, connection);
+            //var populatebasic = "Insert into BasicCustomer values('1234','bob','dame','403-343-2332','23@mad',234),('1235','fob','lame','423-323-1952','dfsd@mad',2334) ";
+            //var popuateCom = new MySqlCommand(populatebasic,connection);
+           // popuateCom.ExecuteNonQuery();
+
 
             connection.Close();
         }
@@ -97,23 +102,74 @@ namespace GymManagement.Services
         /// </summary>
         public void getAllCustomers()
         {
-           // AllCustomers list = new AllCustomers();
+           // load all basic cusotmer into the list
             connection.Open();
             string sql = "Select * from BasicCustomer;";
             var command = new MySqlCommand(sql, connection);
-            
+
 
             var reader = command.ExecuteReader();
+            
             while (reader.Read())
             {
                 BasicCustomer bc = new BasicCustomer((string)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (int)reader[5] );
                // list.basicCustomersList.Add(bc);
                 AllCustomers.basicCustomersList.Add(bc);
             }
+
+            // load up all epic cusomers into the list
+            string sqlepic = "Select * from EpicCustomer;";
+            var commandEpic = new MySqlCommand(sqlepic, connection);
+            connection.Close();
+            connection.Open();
+
+            var readerEpic = commandEpic.ExecuteReader();
+
+            while (readerEpic.Read())
+            {
+                epicCustomer ec = new epicCustomer((string)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (int)reader[5], (int)reader[6]);
+                
+                AllCustomers.epicCustomersList.Add(ec);
+            }
+
+
+
+            // load up all friend cusomers into the list
+            string sqlFriend = "Select * from friendCustomer;";
+            var commandFriend = new MySqlCommand(sqlFriend, connection);
+
+
+            connection.Close();
+            connection.Open();
+
+            var readerFriend = commandFriend.ExecuteReader();
+
+            while (readerFriend.Read())
+            {
+                FriendCustomer fc = new FriendCustomer((string)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (int)reader[5], (int)reader[6], (int)reader[7], (int)reader[8]);
+                
+                AllCustomers.friendCustomersList.Add(fc);
+            }
+
+
+
+
+            connection.Close();
+
+
+
+        }
+        public void addBasic(string ID, string firstName, string lastName, string phone, string Email, int Calories)
+        {
+            connection.Open();
+            var sql = $"Insert into BasicCustomer values('{ID}','{firstName}','{lastName}','{phone}','{Email}',{Calories})";
+            var command = new MySqlCommand(sql, connection);
+            command.ExecuteNonQuery();
             connection.Close();
 
         }
-       
+
+
 
 
 

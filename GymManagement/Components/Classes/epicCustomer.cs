@@ -10,7 +10,8 @@ namespace GymManagement.Components.Classes
 
     {
         public int workDuration { get; set; }
-     
+        public string CustomerType = "epic";
+
         public epicCustomer(string ID, string firstName, string lastName, string phone, string Email, int Calories, int duration) : base( ID, firstName, lastName, phone, Email, Calories)
         { 
             workDuration = duration;

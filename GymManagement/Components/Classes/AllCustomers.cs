@@ -9,7 +9,7 @@ namespace GymManagement.Components.Classes
     public static  class AllCustomers
     {
         public static List<BasicCustomer> basicCustomersList = new List<BasicCustomer>();
-        //public List<epicCustomer> epicCustomersList = new List<epicCustomer>();
-        //public List<FriendCustomer> friendCustomersList = new List<FriendCustomer>();
+        public static List<epicCustomer> epicCustomersList = new List<epicCustomer>();
+        public static List<FriendCustomer> friendCustomersList = new List<FriendCustomer>();
     }
 }
