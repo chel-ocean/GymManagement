@@ -3,6 +3,7 @@ using MySqlConnector;
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,6 +113,7 @@ namespace GymManagement.Services
             
             while (reader.Read())
             {
+                //AllCustomers.basicCustomersList.Clear();
                 BasicCustomer bc = new BasicCustomer((string)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (int)reader[5] );
                // list.basicCustomersList.Add(bc);
                 AllCustomers.basicCustomersList.Add(bc);
@@ -127,6 +129,7 @@ namespace GymManagement.Services
 
             while (readerEpic.Read())
             {
+               // AllCustomers.epicCustomersList.Clear();
                 epicCustomer ec = new epicCustomer((string)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (int)reader[5], (int)reader[6]);
                 
                 AllCustomers.epicCustomersList.Add(ec);
@@ -146,6 +149,7 @@ namespace GymManagement.Services
 
             while (readerFriend.Read())
             {
+                //AllCustomers.friendCustomersList.Clear();
                 FriendCustomer fc = new FriendCustomer((string)reader[0], (string)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (int)reader[5], (int)reader[6], (int)reader[7], (int)reader[8]);
                 
                 AllCustomers.friendCustomersList.Add(fc);
@@ -159,6 +163,7 @@ namespace GymManagement.Services
 
 
         }
+       
         public void addBasic(string ID, string firstName, string lastName, string phone, string Email, int Calories)
         {
             connection.Open();
@@ -168,6 +173,29 @@ namespace GymManagement.Services
             connection.Close();
 
         }
+        public void addEpic(string ID, string firstName, string lastName, string phone, string Email, int Calories, int duration)
+        {
+            connection.Open();
+            var sql = $"Insert into epicCustomer values('{ID}','{firstName}','{lastName}','{phone}','{Email}',{Calories}, {duration})";
+            var command = new MySqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+        // add customer into fried db
+        public void addFriend(string ID, string firstName, string lastName, string phone, string Email, int Calories, int duration, int bench, int deadlift)
+        {
+            connection.Open();
+            var sql = $"Insert into friendCustomer values('{ID}','{firstName}','{lastName}','{phone}','{Email}',{Calories}, {duration},{bench},{deadlift})";
+            var command = new MySqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+        //public void editCusotmer(string id) { }
+        public void removeCusotmer(string id) 
+        { 
+        }
+
+
 
 
 

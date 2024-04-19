@@ -29,7 +29,7 @@
                 <td>@cusotmer.CustomerType</td>
                 <td><input type="checkbox"  unchecked></td>
                 <td>
-                    <button class="btn btn-warning">Edit</button>
+                    <button class="btn btn-warning" @onclick="() => Edit(cusotmer.customerId)">Edit</button>
                     <button class="btn btn-danger">Delete</button>
                 </td>
                
@@ -45,7 +45,7 @@
                 <td>@cusotmer.CustomerType</td>
                 <td><input type="checkbox" unchecked></td>
                 <td>
-                    <button class="btn btn-warning">Edit</button>
+                    <button class="btn btn-warning" @onclick="() => Edit(cusotmer.customerId)">Edit</button>
                     <button class="btn btn-danger">Delete</button>
                 </td>
                
@@ -62,7 +62,7 @@
                 <td>@cusotmer.CustomerType</td>
                 <td ><input class="p-3" type="checkbox" unchecked></td>
                 <td>
-                    <button class="btn btn-warning">Edit</button>
+                    <button class="btn btn-warning" @onclick="() => Edit(cusotmer.customerId)">Edit</button>
                     <button class="btn btn-danger">Delete</button>
                 </td>
 

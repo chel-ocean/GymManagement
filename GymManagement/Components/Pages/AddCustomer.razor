@@ -3,27 +3,37 @@
 <h1 class="text-center">Add Customer</h1>
 
 
-<div class="flights container">
+<div class="m-4">
     <div class="row">
         <div class="col">
-            From:
-            <input type="text" @bind="Id" placeholder="Any" />
+            First Name:
+            <input type="text" @bind="CustomerName" placeholder="" />
 
 
         </div>
         <div class="col ">
-            To:
-            <input type="text" @bind="arivalName" placeholder="Any" />
+            Last Name:
+            <input type="text" @bind="CustomerLastName" placeholder="" />
         </div>
         <div class="col ">
-            Day:
-            <input type="text" @bind="day" placeholder="Any" />
+            Phone Number:
+            <input type="text" @bind="phone" placeholder="" />
         </div>
 
         <div class="col ">
-            <button type="submit" class="btn btn-primary btn-sm btn-block m-0" onclick="@(() => searchFLights(deptName,arivalName,day))">Find flight</button>
+            Email:
+            <input type="text" @bind="email" placeholder="" />
+            
 
         </div>
+        <div class="col ">
+            Calories:
+            <input type="text" @bind="calories" placeholder="" />
+
+
+        </div>
+        
+        
     </div>
 
 
@@ -31,28 +41,48 @@
 
 
 </div>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Email</th>
-            <th scope="col">Calories</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row"> <input type="text" /></th>
-            <td> <input type="text" /></td>
-            <td> <input type="text" /></td>
-            <td> <input type="text" /></td>
-        </tr>
+<div>
+    Add membership Type:
+    <select @bind="type">
+        <option>Select a type</option>
+        <option value="basic">Basic</option>
+        <option value="epic">Epic</option>
+        <option value="friend">Friend</option>
+    </select>
+    @if(type == "epic")
+    {
+        <div>
+            Enter life time work out time
+            <input type="text" @bind="duration" placeholder="" />
+        </div>
         
-    </tbody>
-</table>
+
+    }
+    else if( type =="friend")
+    {
+        <div>
+            Enter max Bench weight kg and max Deadlift kg 
+            <input type="text" @bind="maxBench" placeholder="Bench kg" />
+            <input type="text" @bind="maxDeadLift" placeholder="Dead Lift kg" />
+        </div>
+
+    }
+    
+</div>
+
+@if(added){
+    <div class="alert alert-success" role="alert">
+        success customer was added
+    </div>
+
+}
+<div class="text-center">
+    <button type="button" class=" btn btn-success " @onclick="Add">Save</button>
+</div>
+
+
+
+   
 
 @code {
 

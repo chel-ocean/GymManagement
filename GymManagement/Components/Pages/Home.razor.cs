@@ -16,9 +16,13 @@ namespace GymManagement.Components.Pages
         [Inject] NavigationManager NavigationManager { get; set; }
         public string Name { get; set; }
         //public AllCustomers list = new AllCustomers();
-        public static List<BasicCustomer> basicList = AllCustomers.basicCustomersList;
-        public static List<epicCustomer> epicList = AllCustomers.epicCustomersList;
-        public static List<FriendCustomer> firendList = AllCustomers.friendCustomersList;
+        //public static List<BasicCustomer> basicList = AllCustomers.basicCustomersList;
+        //public static List<epicCustomer> epicList = AllCustomers.epicCustomersList;
+        // public static List<FriendCustomer> firendList = AllCustomers.friendCustomersList;
+
+        public static HashSet<BasicCustomer> basicList = AllCustomers.basicCustomersList;
+        public static HashSet<epicCustomer> epicList = AllCustomers.epicCustomersList;
+        public static HashSet<FriendCustomer> firendList = AllCustomers.friendCustomersList;
         private CustomerDb customerdb = new CustomerDb();
         protected override void OnInitialized()
         {
@@ -27,15 +31,18 @@ namespace GymManagement.Components.Pages
             customerdb.getAllCustomers();
             // if list is empty popluate db Guid g = Guid.NewGuid(); 
 
-            //AllCustomers list = new AllCustomers();
-            // List<BasicCustomer> basicList = list.basicCustomersList;
 
 
         }
         private void Add()
         {
-            NavigationManager.NavigateTo($"/AddCustomer/");
+            NavigationManager.NavigateTo("/AddCustomer");
         }
+        private void Edit(string id) 
+        {
+            NavigationManager.NavigateTo($"/EditCustomer/{id}");
+        }
+        //private void Remove(string id, string type) { }
 
 
     }

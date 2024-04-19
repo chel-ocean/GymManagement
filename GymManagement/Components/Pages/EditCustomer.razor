@@ -1,4 +1,80 @@
-﻿<h3>editCustomer</h3>
+﻿@page "/EditCustomer/{id}"
+
+<h1 class="text-center">Edit Customer</h1>
+
+
+<div class="m-4">
+    <div class="row">
+        <div class="col">
+            First Name:
+            <input type="text" @bind="CustomerName"  />
+
+
+        </div>
+        <div class="col ">
+            Last Name:
+            <input type="text" @bind="CustomerLastName" />
+        </div>
+        <div class="col ">
+            Phone Number:
+            <input type="text" @bind="phone"  />
+        </div>
+
+        <div class="col ">
+            Email:
+            <input type="text" @bind="email"  />
+
+
+        </div>
+        <div class="col ">
+            Calories:
+            <input type="text" @bind="calories"  />
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+</div>
+<div>
+    Change membership Type:
+    <select @bind="type">
+        <option>Select a type</option>
+        <option value="basic">Basic</option>
+        <option value="epic">Epic</option>
+        <option value="friend">Friend</option>
+    </select>
+    @if (type == "epic")
+    {
+        <div>
+            Enter life time work out time
+            <input type="text" @bind="duration" placeholder="" />
+        </div>
+
+
+    }
+    else if (type == "friend")
+    {
+        <div>
+            Enter max Bench weight kg and max Deadlift kg
+            <input type="text" @bind="maxBench" placeholder="Bench kg" />
+            <input type="text" @bind="maxDeadLift" placeholder="Dead Lift kg" />
+        </div>
+
+    }
+
+</div>
+
+
+
+
+
+
 
 @code {
 
