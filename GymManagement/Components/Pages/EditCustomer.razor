@@ -1,73 +1,149 @@
-﻿@page "/EditCustomer/{id}"
+﻿@page "/EditCustomer/{id}/{type}"
 
 <h1 class="text-center">Edit Customer</h1>
+<h3> Cutomer type is @type</h3>
 
-
-<div class="m-4">
+@if(type =="basic"){
+   <div class="m-4">
     <div class="row">
         <div class="col">
             First Name:
-            <input type="text" @bind="CustomerName"  />
+                <input type="text" @bind="foundbasic.customerFName" />
 
 
         </div>
         <div class="col ">
             Last Name:
-            <input type="text" @bind="CustomerLastName" />
+                <input type="text" @bind="foundbasic.customerLName" />
         </div>
         <div class="col ">
             Phone Number:
-            <input type="text" @bind="phone"  />
+                <input type="text" @bind="foundbasic.customerPhone" />
         </div>
 
         <div class="col ">
             Email:
-            <input type="text" @bind="email"  />
+                <input type="text" @bind="foundbasic.email" />
 
 
         </div>
         <div class="col ">
             Calories:
-            <input type="text" @bind="calories"  />
+                <input type="number" min="0" @bind="foundbasic.calories" />
 
 
+        </div>
+     </div>
+
+
+    </div>
+
+    }
+    else if(type=="epic")
+    {
+    <div class="m-4">
+        <div class="row">
+            <div class="col">
+                First Name:
+                <input type="text" @bind="foundEpic.customerFName" />
+
+
+            </div>
+            <div class="col ">
+                Last Name:
+                <input type="text" @bind="foundEpic.customerLName" />
+            </div>
+            <div class="col ">
+                Phone Number:
+                <input type="text" @bind="foundEpic.customerPhone" />
+            </div>
+
+            <div class="col ">
+                Email:
+                <input type="text" @bind="foundEpic.email" />
+
+
+            </div>
+            <div class="col ">
+                Calories:
+                <input type="number" min="0" @bind="foundEpic.calories" />
+
+
+            </div>
+        </div>
+        <div>
+            Enter life time work out time
+            <input type="number" min="0" @bind="foundEpic.workDuration" />
         </div>
 
 
     </div>
 
-
-
-
-
-</div>
-<div>
-    Change membership Type:
-    <select @bind="type">
-        <option>Select a type</option>
-        <option value="basic">Basic</option>
-        <option value="epic">Epic</option>
-        <option value="friend">Friend</option>
-    </select>
-    @if (type == "epic")
+    }
+    else if(type == "friend")
     {
+    <div class="m-4">
+        <div class="row">
+            <div class="col">
+                First Name:
+                <input type="text" @bind="foundFriend.customerFName" />
+
+
+            </div>
+            <div class="col ">
+                Last Name:
+                <input type="text" @bind="foundFriend.customerLName" />
+            </div>
+            <div class="col ">
+                Phone Number:
+                <input type="text" @bind="foundFriend.customerPhone" />
+            </div>
+
+            <div class="col ">
+                Email:
+                <input type="text" @bind="foundFriend.email" />
+
+
+            </div>
+            <div class="col ">
+                Calories:
+                <input type="number" min="0" @bind="foundFriend.calories" />
+
+
+            </div>
+        </div>
+        
         <div>
             Enter life time work out time
-            <input type="text" @bind="duration" placeholder="" />
+            <input type="number" min="0" @bind="foundFriend.workDuration" placeholder="" />
         </div>
-
-
-    }
-    else if (type == "friend")
-    {
         <div>
             Enter max Bench weight kg and max Deadlift kg
-            <input type="text" @bind="maxBench" placeholder="Bench kg" />
-            <input type="text" @bind="maxDeadLift" placeholder="Dead Lift kg" />
+            <input type="number" min="0" @bind="foundFriend.maxBench" placeholder="Bench kg" />
+            <input type="number" min="0" @bind="foundFriend.maxDeadlift" placeholder="Dead Lift kg" />
         </div>
+
+
+    </div>
 
     }
 
+
+
+
+
+
+
+
+@if (saved)
+{
+    <div class="alert alert-success" role="alert">
+        success customer was added
+    </div>
+
+}
+<div class="text-center">
+    <button type="button" class=" btn btn-success " @onclick="Save">Save</button>
 </div>
 
 

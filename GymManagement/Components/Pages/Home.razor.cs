@@ -20,15 +20,18 @@ namespace GymManagement.Components.Pages
         //public static List<epicCustomer> epicList = AllCustomers.epicCustomersList;
         // public static List<FriendCustomer> firendList = AllCustomers.friendCustomersList;
 
-        public static HashSet<BasicCustomer> basicList = AllCustomers.basicCustomersList;
-        public static HashSet<epicCustomer> epicList = AllCustomers.epicCustomersList;
-        public static HashSet<FriendCustomer> firendList = AllCustomers.friendCustomersList;
+        public static HashSet<BasicCustomer> basicList = new HashSet<BasicCustomer>();
+        public static HashSet<epicCustomer> epicList = new HashSet<epicCustomer>();
+        public static HashSet<FriendCustomer> friendList = new HashSet<FriendCustomer>();
         private CustomerDb customerdb = new CustomerDb();
         protected override void OnInitialized()
         {
             
             customerdb.InitializeDatabase();
-            customerdb.getAllCustomers();
+            basicList = customerdb.getBasicCustomers();
+            epicList = customerdb.getEpicCustomers();
+            friendList = customerdb.GetFriendCustomers();
+
             // if list is empty popluate db Guid g = Guid.NewGuid(); 
 
 
@@ -38,12 +41,17 @@ namespace GymManagement.Components.Pages
         {
             NavigationManager.NavigateTo("/AddCustomer");
         }
-        private void Edit(string id) 
+        private void Edit(string id, string type) 
         {
-            NavigationManager.NavigateTo($"/EditCustomer/{id}");
+            NavigationManager.NavigateTo($"/EditCustomer/{id}/{type}");
         }
-        //private void Remove(string id, string type) { }
-
-
+        private void Remove(string id, string type) 
+        {
+            customerdb.removeCusotmer(id, type);
+            NavigationManager.NavigateTo($"/", forceLoad: true);
+        }
     }
+
+
+    
 }

@@ -28,7 +28,9 @@
         </div>
         <div class="col ">
             Calories:
-            <input type="text" @bind="calories" placeholder="" />
+            <input type="number" min="0" @bind="calories" placeholder="" />
+            
+
 
 
         </div>
@@ -53,7 +55,7 @@
     {
         <div>
             Enter life time work out time
-            <input type="text" @bind="duration" placeholder="" />
+            <input type="number" min="0" @bind="duration" placeholder="" />
         </div>
         
 
@@ -61,9 +63,13 @@
     else if( type =="friend")
     {
         <div>
-            Enter max Bench weight kg and max Deadlift kg 
-            <input type="text" @bind="maxBench" placeholder="Bench kg" />
-            <input type="text" @bind="maxDeadLift" placeholder="Dead Lift kg" />
+            Enter life time work out time
+            <input type="number" min="0" @bind="duration" placeholder="" />
+        </div>
+        <div>
+            Enter max Bench weight kg and max Deadlift kg
+            <input type="number" min="0" @bind="maxBench" placeholder="Bench kg" />
+            <input type="number" min="0" @bind="maxDeadLift" placeholder="Dead Lift kg" />
         </div>
 
     }

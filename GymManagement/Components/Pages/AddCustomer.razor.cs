@@ -24,9 +24,15 @@ namespace GymManagement.Components.Pages
         public string type { get; set;}
         [Inject] NavigationManager NavigationManager { get; set; }
         private CustomerDb customerdb = new CustomerDb();
+        public static HashSet<BasicCustomer> basicList = new HashSet<BasicCustomer>();
+        public static HashSet<epicCustomer> epicList = new HashSet<epicCustomer>();
+        public static HashSet<FriendCustomer> friendList = new HashSet<FriendCustomer>();
         protected override void OnInitialized()
         {
             CustomerId = Guid.NewGuid().ToString();
+            basicList = customerdb.getBasicCustomers();
+            epicList = customerdb.getEpicCustomers();
+            friendList = customerdb.GetFriendCustomers();
 
 
         }
@@ -40,20 +46,21 @@ namespace GymManagement.Components.Pages
             else if (type.ToLower() == "basic") 
             {
                 BasicCustomer customer = new BasicCustomer(CustomerId,CustomerName,CustomerLastName,phone,email,calories);
-                AllCustomers.basicCustomersList.Add(customer);
+                basicList.Add(customer);
+                
                 customerdb.addBasic(CustomerId, CustomerName, CustomerLastName, phone, email, calories);
             }
             else if(type.ToLower() == "epic")
             {
                 epicCustomer customer = new epicCustomer(CustomerId, CustomerName, CustomerLastName, phone, email, calories,duration);
-                AllCustomers.epicCustomersList.Add(customer);
+                epicList.Add(customer);
                 customerdb.addEpic(CustomerId, CustomerName, CustomerLastName, phone, email, calories, duration);
 
             }
             else if (type.ToLower()== "friend")
             {
                 FriendCustomer customer = new FriendCustomer(CustomerId, CustomerName, CustomerLastName, phone, email, calories,duration,maxBench, maxDeadLift);
-                AllCustomers.friendCustomersList.Add(customer);
+                friendList.Add(customer);
                 customerdb.addFriend(CustomerId, CustomerName, CustomerLastName, phone, email, calories,duration,maxBench,maxDeadLift);
 
             }

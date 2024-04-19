@@ -29,8 +29,8 @@
                 <td>@cusotmer.CustomerType</td>
                 <td><input type="checkbox"  unchecked></td>
                 <td>
-                    <button class="btn btn-warning" @onclick="() => Edit(cusotmer.customerId)">Edit</button>
-                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-warning" @onclick="() => Edit(cusotmer.customerId,cusotmer.CustomerType)">Edit</button>
+                    <button class="btn btn-danger" @onclick="() => Remove(cusotmer.customerId,cusotmer.CustomerType)">Delete</button>
                 </td>
                
             </tr>
@@ -45,14 +45,14 @@
                 <td>@cusotmer.CustomerType</td>
                 <td><input type="checkbox" unchecked></td>
                 <td>
-                    <button class="btn btn-warning" @onclick="() => Edit(cusotmer.customerId)">Edit</button>
-                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-warning" @onclick="() => Edit(cusotmer.customerId,cusotmer.CustomerType)">Edit</button>
+                    <button class="btn btn-danger" @onclick="() => Remove(cusotmer.customerId,cusotmer.CustomerType)">Delete</button>
                 </td>
                
 
             </tr>
         }
-        @foreach (var cusotmer in firendList)
+        @foreach (var cusotmer in friendList)
         {
             <tr>
 
@@ -62,8 +62,8 @@
                 <td>@cusotmer.CustomerType</td>
                 <td ><input class="p-3" type="checkbox" unchecked></td>
                 <td>
-                    <button class="btn btn-warning" @onclick="() => Edit(cusotmer.customerId)">Edit</button>
-                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-warning" @onclick="() => Edit(cusotmer.customerId,cusotmer.CustomerType)">Edit</button>
+                    <button class="btn btn-danger" @onclick="() => Remove(cusotmer.customerId,cusotmer.CustomerType)">Delete</button>
                 </td>
 
             </tr>
