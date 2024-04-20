@@ -1,0 +1,65 @@
+﻿@page "/registration"
+@using GymManagement.Components.Classes;
+@using System;
+@using System.Collections;
+@using System.Collections.Generic;
+@using System.IO;
+@using MySqlConnector;
+<h3>Registration</h3>
+
+<form>
+	<div>
+		<label>First Name</label>
+		<input type="text" class="form-control" placeholder="Enter First Name" @bind="newManagerFirstName" />
+	</div>
+
+	<div>
+		<label>Last Name</label>
+		<input type="text" class="form-control" placeholder="Enter Last Name" @bind="newManagerLastName" />
+	</div>
+
+	<div>
+		<label>Email</label>
+		<input type="text" class="form-control" placeholder="Enter Email" @bind="newManagerEmail" />
+	</div>
+
+	<div>
+		<label>Username</label>
+		<input type="text" class="form-control" placeholder="Enter Username" @bind="newManagerUsername" />
+	</div>
+	<div>
+		<label>Password</label>
+		<input type="password" class="form-control" placeholder="Enter Password" @bind="newManagerPassword" />
+	</div>
+	<div>
+		<button class="btn btn-primary" type="submit" @onclick="AddManager">Register</button>
+	</div>
+</form>
+
+
+
+
+@code {
+	List<Account> managerList = new List<Account>();
+	AccountManagerUI accountManagerUI = new AccountManagerUI();
+	string accountType = "Manager";
+	string newManagerUsername;
+	string newManagerPassword;
+	string newManagerFirstName;
+	string newManagerLastName;
+	string newManagerEmail;
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		accountManagerUI.CreateAccountList(accountType);
+		managerList = accountManagerUI.ReadAccounts(accountType);
+	}
+
+	public async void AddManager()
+	{
+		Account newManager = new Account(newManagerUsername, newManagerPassword, newManagerFirstName + " " + newManagerLastName, newManagerEmail);
+		accountManagerUI.AddAccount(newManager, accountType);
+		managerList.Add(newManager);
+	}
+}

@@ -1,0 +1,42 @@
+﻿@page "/managers"
+@using GymManagement.Components.Classes;
+@using System;
+@using System.Collections;
+@using System.Collections.Generic;
+@using System.IO;
+@using MySqlConnector;
+<h3>Managers</h3>
+
+<div>
+	<table>
+		<tr>
+			<th>Username</th>
+			<th>Password</th>
+			<th>Name</th>
+			<th>Email</th>
+		</tr>
+		@foreach (Account manager in managerList)
+		{
+			<tr>
+				<th>@manager.Username hello</th>
+				<th>@manager.Password hello</th>
+				<th>@manager.Name hello</th>
+				<th>@manager.Email hello</th>
+			</tr>
+		}
+	</table>
+</div>
+
+@code {
+	List<Account> managerList = new List<Account>();
+	AccountManagerUI accountManagerUI = new AccountManagerUI();
+	string accountType = "Manager";
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		accountManagerUI.CreateAccountList(accountType);
+		managerList = accountManagerUI.ReadAccounts(accountType);
+	}
+
+}

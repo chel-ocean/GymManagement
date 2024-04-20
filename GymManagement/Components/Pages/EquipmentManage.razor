@@ -8,7 +8,7 @@
 <h3>Equipment Management</h3>
 
 <h4>Equipment List</h4>
-<div style="height:12.8rem;overflow:auto;">
+<div style="height:11rem;overflow:auto;">
 	<table style="width:100%">
 		<tr>
 			<th>Equipment ID</th>
@@ -34,7 +34,7 @@
 <form>
 	<label>Enter Equipment ID: </label>
 	<input type="text" placeholder="Equipment ID" @bind="checkOutEquipmentId"/>
-	<button @onclick="CheckInOutEquipment">Check In/Out</button>
+	<button class="btn btn-primary" @onclick="CheckInOutEquipment">Check In/Out</button>
 </form>
 <br />
 <br />
@@ -51,7 +51,7 @@
 		<option value="Cardio">Cardio</option>
 		<option value="Machine">Machine</option>
 	</select>
-	<button @onclick="CreateNewEquipment">Add Equipment</button>
+	<button class="btn btn-primary" @onclick="CreateNewEquipment">Add Equipment</button>
 </form>
 <br />
 <br />
@@ -60,7 +60,7 @@
 <form>
 	<label>Enter Equipment ID: </label>
 	<input type="text" placeholder="Equipment ID" @bind="deleteEquipmentId" />
-	<button @onclick="DeleteEquipment">Delete</button>
+	<button class="btn btn-primary" @onclick="DeleteEquipment">Delete</button>
 </form>
 
 @code {
@@ -118,7 +118,6 @@
 			}
 		}
 		connection.Close();
-
 	}
 
 	public async void CreateNewEquipment()
@@ -198,7 +197,4 @@
 		deleteCmd.ExecuteNonQuery();
 		connection.Close();
 	}
-
-
-
 }
