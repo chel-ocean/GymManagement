@@ -14,5 +14,7 @@ namespace GymManagement.Components.Classes
 		public string Email { get; set; }
 		
 		public Account(string username, string password, string name, string email) { }
+
+		public Account() { }
 	}
 }
