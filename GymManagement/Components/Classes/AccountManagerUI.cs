@@ -1,4 +1,11 @@
-﻿using MySqlConnector;
+﻿/*
+ * Created by Chelsea Yang
+ * Date: April 19, 2024
+ * This class manages all the functions on the Managers page.
+ * Users can create the new Managers table, read table data, and catch sql exceptions.
+*/
+
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
