@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+ * Created by Chelsea Yang
+ * Date: April 18, 2024
+ * The Equipment class includes the ID, name, type, and checked out status.
+ * A full constructor and an empty one can be instantiated.
+ * A constructor without the checked out status can be made when a new equipment is added,
+ * because it's implied that it has not been checked out.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

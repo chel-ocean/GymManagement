@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * Created by Chelsea Yang
+ * Date: April 18, 2024
+ * The Account class includes the username, password, name, and email.
+ * A full constructor and an empty one can be instantiated.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

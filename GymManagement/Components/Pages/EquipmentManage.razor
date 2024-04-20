@@ -5,6 +5,12 @@
 @using System.Collections.Generic;
 @using System.IO;
 @using MySqlConnector;
+
+<!--Created by Chelsea Yang-->
+<!--Date: Apr 18, 2024-->
+<!--This page displays the list of equipment, allows user to check in/out equipment, add new equipment, and delete equipment-->
+<!--The changes to the equipment list will be reflected in the database-->
+<!--The database and all changes are managed in EquipmentManagerUI class.-->
 <h3>Equipment Management</h3>
 
 <h4>Equipment List</h4>
@@ -96,9 +102,11 @@
 				Password = "password",
 				Database = "demo211",
 			};
+
 		MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
 		connection.Open();
 		string update;
+
 		foreach (Equipment equipment in equipmentList)
 		{
 			if (checkOutEquipmentId == equipment.ID)
@@ -124,7 +132,7 @@
 	{
 		List<int> equipmentIDs = new List<int>();
 		foreach (Equipment equipment in equipmentList) equipmentIDs.Add(equipment.ID);
-			
+
 		if (equipmentIDs.Contains(newEquipmentId))
 		{
 			await Application.Current.MainPage.DisplayAlert("Equipment already exists.", $"An equipment with ID: {newEquipmentId} already exists. Please enter a unique ID.", "OK");
@@ -155,9 +163,17 @@
 		MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
 		connection.Open();
 
-		string insertNewEquipment = $"insert into Equipment values({newEquipmentId}, '{newEquipmentName}', '{newEquipmentType}','0')";
-		MySqlCommand insertNewEquipmentCmd = new MySqlCommand(insertNewEquipment, connection);
-		insertNewEquipmentCmd.ExecuteNonQuery();
+		try
+		{
+			string insertNewEquipment = $"insert into Equipment values({newEquipmentId}, '{newEquipmentName}', '{newEquipmentType}','0')";
+			MySqlCommand insertNewEquipmentCmd = new MySqlCommand(insertNewEquipment, connection);
+			insertNewEquipmentCmd.ExecuteNonQuery();
+		} catch (MySqlException e)
+		{
+			Console.WriteLine("Error: SQL INSERT syntax error.", e.ToString());
+		}
+
+
 		connection.Close();
 	}
 
@@ -192,9 +208,17 @@
 			};
 		MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
 		connection.Open();
-		string delete = $"delete from Equipment where ID = {deleteEquipmentId}";
-		MySqlCommand deleteCmd = new MySqlCommand(delete, connection);
-		deleteCmd.ExecuteNonQuery();
+
+		try
+		{
+			string delete = $"delete from Equipment where ID = {deleteEquipmentId}";
+			MySqlCommand deleteCmd = new MySqlCommand(delete, connection);
+			deleteCmd.ExecuteNonQuery();
+		} catch (MySqlException e)
+		{
+			Console.WriteLine("Error: SQL DELETE syntax error.", e.ToString());
+		}
+
 		connection.Close();
 	}
 }
