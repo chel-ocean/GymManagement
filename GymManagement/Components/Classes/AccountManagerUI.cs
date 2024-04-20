@@ -8,11 +8,11 @@ using GymManagement.Components.Classes;
 
 namespace GymManagement.Components.Classes
 {
-	public class AccountManagerUI: IAccount
+	public class AccountManagerUI
 	{
 		public AccountManagerUI() { }
 
-		public void CreateAccountList(string accountType) 
+		public void CreateAccountList()
 		{
 			MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
 			{
@@ -26,12 +26,12 @@ namespace GymManagement.Components.Classes
 			connection.Open();
 
 			// Create new table Equipment
-			string create = $"create table if not exists {accountType}s (Username varchar(20) not null,Password varchar(20) not null, Name varchar(20) not null, Email varchar(30) not null)";
+			string create = $"create table if not exists Managers (Username varchar(20) not null,Password varchar(20) not null, Name varchar(20) not null, Email varchar(30) not null)";
 			MySqlCommand createCmd = new MySqlCommand(create, connection);
 			createCmd.ExecuteNonQuery();
 
 			// Counts number of rows in Equipment table, to check if it is empty
-			string count = $"select count(*) from {accountType}s";
+			string count = $"select count(*) from Managers";
 			MySqlCommand countCmd = new MySqlCommand(count, connection);
 			countCmd.ExecuteScalar();
 			int result = int.Parse(countCmd.ExecuteScalar().ToString());
@@ -39,8 +39,8 @@ namespace GymManagement.Components.Classes
 			// If the table is empty, fill it with the following information
 			if (result == 0)
 			{
-				string insert1 = $"insert into {accountType}s values('chelsyang', 'password', 'Chelsea Yang', 'chelsea.yang@edu.sait.ca')";
-				string insert2 = $"insert into {accountType}s values('davashieze', '123456', 'David Ashieze', 'chigozie.ashieze@edu.sait.ca')";
+				string insert1 = $"insert into Managers values('chelsyang', 'password', 'Chelsea Yang', 'chelsea.yang@edu.sait.ca')";
+				string insert2 = $"insert into Managers values('davashieze', '123456', 'David Ashieze', 'chigozie.ashieze@edu.sait.ca')";
 
 				MySqlCommand insert1Cmd = new MySqlCommand(insert1, connection);
 				MySqlCommand insert2Cmd = new MySqlCommand(insert2, connection);
@@ -51,19 +51,20 @@ namespace GymManagement.Components.Classes
 			connection.Close();
 		}
 
-		public List<Account> ReadAccounts(string accountType) {
+		public List<Account> ReadAccounts()
+		{
 			MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
 			{
 				Server = "localhost",
 				UserID = "root",
 				Password = "password",
 				Database = "demo211",
-				AllowUserVariables = true
+				AllowUserVariables = true,
 			};
 			MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
 			connection.Open();
 
-			string readManagers = $"select * from {accountType}s";
+			string readManagers = "select * from Managers";
 
 			MySqlCommand readManagersCmd = new MySqlCommand(readManagers, connection);
 			MySqlDataReader reader = readManagersCmd.ExecuteReader();
@@ -78,25 +79,6 @@ namespace GymManagement.Components.Classes
 			connection.Close();
 
 			return managerList;
-		}
-
-		public void AddAccount(Account account, string accountType) {
-			MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
-			{
-				Server = "localhost",
-				UserID = "root",
-				Password = "password",
-				Database = "demo211",
-				AllowUserVariables = true
-			};
-			MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
-			connection.Open();
-
-			string insertNewManager= $"insert into {accountType}s values('{account.Username}', '{account.Password}', '{account.Name}','{account.Email}')";
-			MySqlCommand insertNewManagerCmd = new MySqlCommand(insertNewManager, connection);
-			insertNewManagerCmd.ExecuteNonQuery();
-
-			connection.Close();
 		}
 	}
 }

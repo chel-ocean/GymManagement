@@ -7,8 +7,9 @@
 @using MySqlConnector;
 <h3>Managers</h3>
 
-<div>
-	<table>
+<h4>Managers List</h4>
+<div style="height:11rem;overflow:auto;">
+	<table style="width:100%">
 		<tr>
 			<th>Username</th>
 			<th>Password</th>
@@ -18,25 +19,163 @@
 		@foreach (Account manager in managerList)
 		{
 			<tr>
-				<th>@manager.Username hello</th>
-				<th>@manager.Password hello</th>
-				<th>@manager.Name hello</th>
-				<th>@manager.Email hello</th>
+				<th>@manager.Username</th>
+				<th>@manager.Password</th>
+				<th>@manager.Name</th>
+				<th>@manager.Email</th>
 			</tr>
 		}
 	</table>
 </div>
+<br />
+<br />
+
+<h4>Add New Manager</h4>
+<form>
+	<div>
+		<label>First Name</label>
+		<input type="text" class="form-control" placeholder="Enter First Name" @bind="newManagerFirstName" />
+	</div>
+
+	<div>
+		<label>Last Name</label>
+		<input type="text" class="form-control" placeholder="Enter Last Name" @bind="newManagerLastName" />
+	</div>
+
+	<div>
+		<label>Email</label>
+		<input type="text" class="form-control" placeholder="Enter Email" @bind="newManagerEmail" />
+	</div>
+
+	<div>
+		<label>Username</label>
+		<input type="text" class="form-control" placeholder="Enter Username" @bind="newManagerUsername" />
+	</div>
+	<div>
+		<label>Password</label>
+		<input type="password" class="form-control" placeholder="Enter Password" @bind="newManagerPassword" />
+	</div>
+	<div>
+		<button class="btn btn-primary" type="submit" @onclick="CreateNewManager">Register</button>
+	</div>
+</form>
+<br />
+<br />
+
+<h4>Delete Manager</h4>
+<form>
+	<label>Enter Manager Username: </label>
+	<input type="text" placeholder="Manager Username" @bind="deleteManagerUsername" />
+	<button class="btn btn-primary" @onclick="DeleteManager">Delete</button>
+</form>
 
 @code {
 	List<Account> managerList = new List<Account>();
 	AccountManagerUI accountManagerUI = new AccountManagerUI();
-	string accountType = "Manager";
+	string newManagerFirstName;
+	string newManagerLastName;
+	string newManagerEmail;
+	string newManagerUsername;
+	string newManagerPassword;
+	string deleteManagerUsername;
 
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();
-		accountManagerUI.CreateAccountList(accountType);
-		managerList = accountManagerUI.ReadAccounts(accountType);
+		accountManagerUI.CreateAccountList();
+		managerList = accountManagerUI.ReadAccounts();
 	}
 
+	public async void CreateNewManager()
+	{
+		List<string> usernames = new List<string>();
+		foreach (Account manager in managerList) usernames.Add(manager.Username);
+
+		if (usernames.Contains(newManagerUsername))
+		{
+			await Application.Current.MainPage.DisplayAlert("Account already exists.", $"Username: {newManagerUsername} already exists. Please enter a unique username.", "OK");
+			return;
+		}
+
+		if (newManagerFirstName == null)
+		{
+			await Application.Current.MainPage.DisplayAlert("First name missing", "Please enter your first name.", "OK");
+			return;
+		}
+
+		if (newManagerLastName == null)
+		{
+			await Application.Current.MainPage.DisplayAlert("Last name missing", "Please enter your last name.", "OK");
+			return;
+		}
+
+		if (newManagerPassword == null)
+		{
+			await Application.Current.MainPage.DisplayAlert("Password missing", "Please enter your password.", "OK");
+			return;
+		}
+
+		if (newManagerEmail == null)
+		{
+			await Application.Current.MainPage.DisplayAlert("Email missing", "Please enter your email.", "OK");
+			return;
+		}
+
+		Account newManager = new Account(newManagerUsername, newManagerPassword, newManagerFirstName + " " + newManagerLastName, newManagerEmail);
+		managerList.Add(newManager);
+		MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
+			{
+				Server = "localhost",
+				UserID = "root",
+				Password = "password",
+				Database = "demo211",
+			};
+		MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
+		connection.Open();
+
+		string insertNewManager = $"insert into Managers values({newManagerUsername}, '{newManagerPassword}', '{newManagerFirstName} {newManagerLastName}','{newManagerEmail}')";
+		MySqlCommand insertNewManagerCmd = new MySqlCommand(insertNewManager, connection);
+		insertNewManagerCmd.ExecuteNonQuery();
+		connection.Close();
+	}
+
+	public async void DeleteManager()
+	{
+		List<string> usernames = new List<string>();
+		foreach (Account manager in managerList) usernames.Add(manager.Username);
+
+		if (!(usernames.Contains(deleteManagerUsername)))
+		{
+			await Application.Current.MainPage.DisplayAlert("Username does not exist.", $"An account with Username: {deleteManagerUsername} does not exist. Please enter a valid username.", "OK");
+			return;
+		}
+		Account deleteManager = new Account();
+		foreach (Account manager in managerList)
+		{
+			if (manager.Username == deleteManagerUsername)
+			{
+				deleteManager.Username = manager.Username;
+				deleteManager.Password = manager.Password;
+				deleteManager.Name = manager.Name;
+				deleteManager.Email = manager.Email;
+			}
+		}
+
+		managerList.Remove(deleteManager);
+
+		MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
+			{
+				Server = "localhost",
+				UserID = "root",
+				Password = "password",
+				Database = "demo211",
+			};
+
+		MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
+		connection.Open();
+		string delete = $"delete from Managers where Username = {deleteManagerUsername}";
+		MySqlCommand deleteCmd = new MySqlCommand(delete, connection);
+		deleteCmd.ExecuteNonQuery();
+		connection.Close();
+	}
 }
