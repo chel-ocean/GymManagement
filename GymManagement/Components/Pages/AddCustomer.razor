@@ -1,0 +1,95 @@
+﻿@page "/AddCustomer"
+
+<h1 class="text-center">Add Customer</h1>
+
+
+<div class="m-4">
+    <div class="row">
+        <div class="col">
+            First Name:
+            <input type="text" @bind="CustomerName" placeholder="" />
+
+
+        </div>
+        <div class="col ">
+            Last Name:
+            <input type="text" @bind="CustomerLastName" placeholder="" />
+        </div>
+        <div class="col ">
+            Phone Number:
+            <input type="text" @bind="phone" placeholder="" />
+        </div>
+
+        <div class="col ">
+            Email:
+            <input type="text" @bind="email" placeholder="" />
+            
+
+        </div>
+        <div class="col ">
+            Calories:
+            <input type="number" min="0" @bind="calories" placeholder="" />
+            
+
+
+
+        </div>
+        
+        
+    </div>
+
+
+
+
+
+</div>
+<div>
+    Add membership Type:
+    <select @bind="type">
+        <option>Select a type</option>
+        <option value="basic">Basic</option>
+        <option value="epic">Epic</option>
+        <option value="friend">Friend</option>
+    </select>
+    @if(type == "epic")
+    {
+        <div>
+            Enter life time work out time
+            <input type="number" min="0" @bind="duration" placeholder="" />
+        </div>
+        
+
+    }
+    else if( type =="friend")
+    {
+        <div>
+            Enter life time work out time
+            <input type="number" min="0" @bind="duration" placeholder="" />
+        </div>
+        <div>
+            Enter max Bench weight kg and max Deadlift kg
+            <input type="number" min="0" @bind="maxBench" placeholder="Bench kg" />
+            <input type="number" min="0" @bind="maxDeadLift" placeholder="Dead Lift kg" />
+        </div>
+
+    }
+    
+</div>
+
+@if(added){
+    <div class="alert alert-success" role="alert">
+        success customer was added
+    </div>
+
+}
+<div class="text-center">
+    <button type="button" class=" btn btn-success " @onclick="Add">Save</button>
+</div>
+
+
+
+   
+
+@code {
+
+}

@@ -1,0 +1,157 @@
+﻿@page "/EditCustomer/{id}/{type}"
+
+<h1 class="text-center">Edit Customer</h1>
+<h3> Cutomer type is @type</h3>
+
+@if(type =="basic"){
+   <div class="m-4">
+    <div class="row">
+        <div class="col">
+            First Name:
+                <input type="text" @bind="foundbasic.customerFName" />
+
+
+        </div>
+        <div class="col ">
+            Last Name:
+                <input type="text" @bind="foundbasic.customerLName" />
+        </div>
+        <div class="col ">
+            Phone Number:
+                <input type="text" @bind="foundbasic.customerPhone" />
+        </div>
+
+        <div class="col ">
+            Email:
+                <input type="text" @bind="foundbasic.email" />
+
+
+        </div>
+        <div class="col ">
+            Calories:
+                <input type="number" min="0" @bind="foundbasic.calories" />
+
+
+        </div>
+     </div>
+
+
+    </div>
+
+    }
+    else if(type=="epic")
+    {
+    <div class="m-4">
+        <div class="row">
+            <div class="col">
+                First Name:
+                <input type="text" @bind="foundEpic.customerFName" />
+
+
+            </div>
+            <div class="col ">
+                Last Name:
+                <input type="text" @bind="foundEpic.customerLName" />
+            </div>
+            <div class="col ">
+                Phone Number:
+                <input type="text" @bind="foundEpic.customerPhone" />
+            </div>
+
+            <div class="col ">
+                Email:
+                <input type="text" @bind="foundEpic.email" />
+
+
+            </div>
+            <div class="col ">
+                Calories:
+                <input type="number" min="0" @bind="foundEpic.calories" />
+
+
+            </div>
+        </div>
+        <div>
+            Enter life time work out time
+            <input type="number" min="0" @bind="foundEpic.workDuration" />
+        </div>
+
+
+    </div>
+
+    }
+    else if(type == "friend")
+    {
+    <div class="m-4">
+        <div class="row">
+            <div class="col">
+                First Name:
+                <input type="text" @bind="foundFriend.customerFName" />
+
+
+            </div>
+            <div class="col ">
+                Last Name:
+                <input type="text" @bind="foundFriend.customerLName" />
+            </div>
+            <div class="col ">
+                Phone Number:
+                <input type="text" @bind="foundFriend.customerPhone" />
+            </div>
+
+            <div class="col ">
+                Email:
+                <input type="text" @bind="foundFriend.email" />
+
+
+            </div>
+            <div class="col ">
+                Calories:
+                <input type="number" min="0" @bind="foundFriend.calories" />
+
+
+            </div>
+        </div>
+        
+        <div>
+            Enter life time work out time
+            <input type="number" min="0" @bind="foundFriend.workDuration" placeholder="" />
+        </div>
+        <div>
+            Enter max Bench weight kg and max Deadlift kg
+            <input type="number" min="0" @bind="foundFriend.maxBench" placeholder="Bench kg" />
+            <input type="number" min="0" @bind="foundFriend.maxDeadlift" placeholder="Dead Lift kg" />
+        </div>
+
+
+    </div>
+
+    }
+
+
+
+
+
+
+
+
+@if (saved)
+{
+    <div class="alert alert-success" role="alert">
+        success customer was added
+    </div>
+
+}
+<div class="text-center">
+    <button type="button" class=" btn btn-success " @onclick="Save">Save</button>
+</div>
+
+
+
+
+
+
+
+@code {
+
+}
