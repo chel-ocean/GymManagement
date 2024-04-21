@@ -37,7 +37,7 @@ namespace GymManagement.Services
         }
 
         /// <summary>
-        /// Initialize the database and creates all the customer tables table
+        /// Initialize the database and creates all the customer tables if they do not crearted already
         /// </summary>
         public void InitializeDatabase()
         {
@@ -91,11 +91,9 @@ namespace GymManagement.Services
             command3.ExecuteNonQuery();
 
 
-            var checkbasic = "select * form BasicCustomer;";
-            var commandtestBasic = new MySqlCommand(checkbasic, connection);
-            //var populatebasic = "Insert into BasicCustomer values('1234','bob','dame','403-343-2332','23@mad',234),('1235','fob','lame','423-323-1952','dfsd@mad',2334) ";
-            //var popuateCom = new MySqlCommand(populatebasic,connection);
-           // popuateCom.ExecuteNonQuery();
+          //  var checkbasic = "select * form BasicCustomer;";
+          //  var commandtestBasic = new MySqlCommand(checkbasic, connection);
+           
 
 
             connection.Close();

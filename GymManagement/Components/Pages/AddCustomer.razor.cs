@@ -36,6 +36,11 @@ namespace GymManagement.Components.Pages
 
 
         }
+
+        /// <summary>
+        /// calls the add class form the cusotmerdb class and adds to the right database
+        /// </summary>
+        /// <returns></returns>
         public async Task Add()
         {
             if(type == null) 

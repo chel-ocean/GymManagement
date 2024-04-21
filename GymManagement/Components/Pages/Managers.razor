@@ -139,7 +139,7 @@
 		MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
 		connection.Open();
 
-		string insertNewManager = $"insert into Managers values({newManagerUsername}, '{newManagerPassword}', '{newManagerFirstName} {newManagerLastName}','{newManagerEmail}')";
+		string insertNewManager = $"insert into Managers values('{newManagerUsername}', '{newManagerPassword}', '{newManagerFirstName} {newManagerLastName}','{newManagerEmail}')";
 		MySqlCommand insertNewManagerCmd = new MySqlCommand(insertNewManager, connection);
 		insertNewManagerCmd.ExecuteNonQuery();
 		connection.Close();

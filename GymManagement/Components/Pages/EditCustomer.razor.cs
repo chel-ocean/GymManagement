@@ -26,6 +26,9 @@ namespace GymManagement.Components.Pages
         public BasicCustomer foundbasic;
         public epicCustomer foundEpic;
         public FriendCustomer foundFriend;
+        /// <summary>
+        /// displays and find the clicked customer from thier list
+        /// </summary>
         protected override void OnInitialized()
         {
             
@@ -77,6 +80,10 @@ namespace GymManagement.Components.Pages
 
 
         }
+        /// <summary>
+        /// saves the customer to the right databese
+        /// </summary>
+        /// <returns></returns>
         public async Task Save()
         {
             

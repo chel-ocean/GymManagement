@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+/*
+ * Created by David Ashieze
+ * Date: April 19, 2024
+ * This is the baic customer model ihnanced for the CustomerModelClass.
+ * 
+*/
+
 
 namespace GymManagement.Components.Classes
 {
