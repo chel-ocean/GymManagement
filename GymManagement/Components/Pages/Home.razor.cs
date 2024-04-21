@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Reflection.Metadata.BlobBuilder;
 
+
 namespace GymManagement.Components.Pages
 {
     public partial class Home : ComponentBase
@@ -15,10 +16,7 @@ namespace GymManagement.Components.Pages
         public int Id { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         public string Name { get; set; }
-        //public AllCustomers list = new AllCustomers();
-        //public static List<BasicCustomer> basicList = AllCustomers.basicCustomersList;
-        //public static List<epicCustomer> epicList = AllCustomers.epicCustomersList;
-        // public static List<FriendCustomer> firendList = AllCustomers.friendCustomersList;
+        
 
         public static HashSet<BasicCustomer> basicList = new HashSet<BasicCustomer>();
         public static HashSet<epicCustomer> epicList = new HashSet<epicCustomer>();
@@ -26,7 +24,7 @@ namespace GymManagement.Components.Pages
         private CustomerDb customerdb = new CustomerDb();
         protected override void OnInitialized()
         {
-            
+            // initalizeing the db
             customerdb.InitializeDatabase();
             basicList = customerdb.getBasicCustomers();
             epicList = customerdb.getEpicCustomers();
@@ -37,10 +35,14 @@ namespace GymManagement.Components.Pages
 
 
         }
+        /// <summary>
+        /// move to the add page
+        /// </summary>
         private void Add()
         {
             NavigationManager.NavigateTo("/AddCustomer");
         }
+ 
         private void Edit(string id, string type) 
         {
             NavigationManager.NavigateTo($"/EditCustomer/{id}/{type}");

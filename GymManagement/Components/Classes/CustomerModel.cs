@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+/*
+ * Created by David Ashieze
+ * Date: April 19, 2024
+ * This base absract customer model.
+ * 
+*/
 
 namespace GymManagement.Components.Classes
 {
